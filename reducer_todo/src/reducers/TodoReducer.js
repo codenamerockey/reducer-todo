@@ -26,10 +26,12 @@ export function reducer(state, action) {
   }
 }
 
-export const todo = [
-  {
-    item: 'learn reducers',
-    completed: false,
-    id: new Date()
-  }
-];
+export const initialState = {
+  todos: [
+    {
+      item: 'learn reducers',
+      completed: false,
+      id: new Date()
+    }
+  ]
+};

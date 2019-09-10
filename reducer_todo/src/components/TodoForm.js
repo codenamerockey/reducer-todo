@@ -1,9 +1,9 @@
 import React, { useReducer, useState } from 'react';
-import { reducer, todo } from '../reducers/TodoReducer';
+import { reducer, initialState } from '../reducers/TodoReducer';
 
 const TodoForm = () => {
-  const [{ todos }, dispatch] = useReducer(reducer, { todos: [] });
-  const [text, setText] = useState();
+  const [todoList, dispatch] = useReducer(reducer, initialState);
+  const [text, setText] = useState('');
 
   const onsubmitHandler = e => {
     e.preventDefault();
@@ -12,12 +12,20 @@ const TodoForm = () => {
   };
 
   return (
-    <div>
+    <div className="section is-medium container">
       <form onSubmit={onsubmitHandler}>
-        <input value={text} onChange={e => setText(e.target.value)} />
+        <div className="field ">
+          <div className="control">
+            <input
+              className="input is-info"
+              value={text}
+              onChange={e => setText(e.target.value)}
+            />
+          </div>
+        </div>
       </form>
       {/* places todo items on the screen by returning a div */}
-      {todos.map((t, index) => {
+      {todoList.todos.map((t, index) => {
         return (
           <div
             key={Math.random().toString()}
