@@ -5,30 +5,33 @@ const TodoForm = () => {
   const [{ todos }, dispatch] = useReducer(reducer, { todos: [] });
   const [text, setText] = useState();
 
+  const onsubmitHandler = e => {
+    e.preventDefault();
+    dispatch({ type: 'ADD_TODO', text });
+    setText('');
+  };
+
   return (
     <div>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          dispatch({ type: 'ADD_TODO', text });
-          setText('');
-        }}
-      >
+      <form onSubmit={onsubmitHandler}>
         <input value={text} onChange={e => setText(e.target.value)} />
       </form>
       {/* places todo items on the screen by returning a div */}
-      {todos.map((t, idx) => {
+      {todos.map((t, index) => {
         return (
           <div
             key={Math.random().toString()}
-            onClick={() => dispatch({ type: 'TOGGLE_TODO', idx })}
+            onClick={() => dispatch({ type: 'TOGGLE_TODO', index })}
             style={{ textDecoration: t.completed ? 'line-through' : '' }}
           >
             {t.text}
           </div>
         );
       })}
-      {/* <pre>{JSON.stringify(todos, null, 2)}</pre> */}
+      <button onClick={onsubmitHandler}>Add Todo</button>
+      <button onClick={() => dispatch({ type: 'CLEAR_COMPLETED_TODO' })}>
+        Clear Completed
+      </button>
     </div>
   );
 };

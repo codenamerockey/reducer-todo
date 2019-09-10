@@ -3,14 +3,22 @@ export function reducer(state, action) {
   switch (action.type) {
     case 'ADD_TODO':
       return {
-        todos: [...state.todos, { text: action.text, completed: false }]
+        todos: [
+          ...state.todos,
+          { text: action.text, completed: false, id: Math.random().toString() }
+        ]
       };
 
     case 'TOGGLE_TODO':
       return {
-        todos: state.todos.map((t, idx) =>
-          idx === action.idx ? { ...t, completed: !t.completed } : t
+        todos: state.todos.map((t, index) =>
+          index === action.index ? { ...t, completed: !t.completed } : t
         )
+      };
+
+    case 'CLEAR_COMPLETED_TODO':
+      return {
+        todos: state.todos.filter(t => !t.completed)
       };
 
     default:
